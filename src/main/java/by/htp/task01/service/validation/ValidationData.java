@@ -3,6 +3,9 @@ package by.htp.task01.service.validation;
 import java.util.regex.Pattern;
 
 public final class ValidationData {
+	public static final String NUMBER_REGULAR = "\\d+";
+	public static final String YEAR_REGULAR = "[0-9]{4}";
+	
 	private ValidationData() {}
 
 	public static boolean validBook(String title, String genre, String author, String year, String quantity){
@@ -24,7 +27,7 @@ public final class ValidationData {
 	}
 	
 	public static boolean validYear(String year){
-		return Pattern.matches(RegularExpression.YEAR_REGULAR, year);
+		return Pattern.matches(YEAR_REGULAR, year);
 	}
 	
 	public static boolean validUser(String login, String password){
@@ -44,7 +47,7 @@ public final class ValidationData {
 	}
 	
 	public static boolean validNumber(String number){
-		return Pattern.matches(RegularExpression.NUMBER_REGULAR, number);
+		return Pattern.matches(NUMBER_REGULAR, number);
 	}
 	
 }
