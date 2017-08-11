@@ -8,10 +8,14 @@ import by.htp.task01.dao.exception.ConnectionPoolException;
 import by.htp.task01.dao.exception.DAOException;
 
 public class InitializationDAOImpl implements InitializationDAO {
+	private ConnectionPool connectionPool;
 
+	public void setConnectionPool(ConnectionPool connectionPool) {
+		this.connectionPool = connectionPool;
+	}
+	
 	@Override
-	public void initialization() throws DAOException {
-		ConnectionPool connectionPool = ConnectionPool.getInstance();
+	public void initialize() throws DAOException {
 		
 		try {
 			connectionPool.init();
@@ -22,7 +26,6 @@ public class InitializationDAOImpl implements InitializationDAO {
 
 	@Override
 	public void destroy() throws DAOException {
-		ConnectionPool connectionPool = ConnectionPool.getInstance();
 		
 		try {
 			connectionPool.close();

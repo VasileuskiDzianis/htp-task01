@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import by.htp.task01.dao.connection.manager.DBParameter;
-import by.htp.task01.dao.connection.manager.DBResourceManager;
 import by.htp.task01.dao.exception.ConnectionPoolException;
 import by.htp.task01.dao.exception.DAOException;
 
@@ -23,33 +21,43 @@ public final class ConnectionPool implements Closeable{
 	private BlockingQueue<Connection> freeConnection;
 	private BlockingQueue<Connection> busyConnection;
 	
-	private int poolsize;
+	private int poolSize;
 	private String driver;
 	private String user;
 	private String password;
 	private String url;
- 	
+	
+	public void setPoolSize(int poolSize) {
+		this.poolSize = poolSize;
+	}
+
+	public void setDriver(String driver) {
+		this.driver = driver;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	private ConnectionPool() {
-		DBResourceManager resourceManager = DBResourceManager.getInstance();
-		this.driver = resourceManager.getValue(DBParameter.DB_DRIVER);
-		this.user = resourceManager.getValue(DBParameter.DB_USER);
-		this.password = resourceManager.getValue(DBParameter.DB_PASSWORD);
-		this.url = resourceManager.getValue(DBParameter.DB_URL);
-		
-		try{
-			this.poolsize = Integer.parseInt(resourceManager.getValue(DBParameter.DB_POOLSIZE));
-		}catch (NumberFormatException e) {
-			this.poolsize = 6;
-		}	
+
 	}
 	
 	public void init() throws ConnectionPoolException{
-		freeConnection = new ArrayBlockingQueue<Connection>(poolsize);
-		busyConnection = new ArrayBlockingQueue<Connection>(poolsize);
+		freeConnection = new ArrayBlockingQueue<Connection>(poolSize);
+		busyConnection = new ArrayBlockingQueue<Connection>(poolSize);
 		
 		try{
 			Class.forName(driver);
-			for(int i = 0; i < poolsize; i++){
+			for(int i = 0; i < poolSize; i++){
 				freeConnection.add(DriverManager.getConnection(url, user, password));
 			}
 		}catch (ClassNotFoundException e) {

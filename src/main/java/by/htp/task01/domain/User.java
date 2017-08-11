@@ -2,13 +2,15 @@ package by.htp.task01.domain;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	private int id;
 	private String login;
 	private int password;
-	
-	public User() {}
+
+	public User() {
+	}
 
 	public int getId() {
 		return id;

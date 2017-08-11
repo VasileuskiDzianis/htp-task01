@@ -6,7 +6,7 @@ public class WrongRequest implements Command {
 
 	@Override
 	public String executeCommand(String request) {
+		
 		return "Wrong request!";
 	}
-
 }

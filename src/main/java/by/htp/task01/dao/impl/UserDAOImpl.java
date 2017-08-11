@@ -14,17 +14,22 @@ import by.htp.task01.dao.exception.DAOException;
 import by.htp.task01.domain.User;
 
 public class UserDAOImpl implements UserDAO {
+	private ConnectionPool connectionPool;
 
+	public void setConnectionPool(ConnectionPool connectionPool) {
+		this.connectionPool = connectionPool;
+	}
+	
 	@Override
 	public User signIn(String login, int password) throws DAOException {
-		ConnectionPool pool  = ConnectionPool.getInstance();
+		//ConnectionPool connectionPool  = ConnectionPool.getInstance();
 		PreparedStatement preparedStatement = null;
 		Connection connection = null;
 		ResultSet resultSet = null;
 		User user = null;
 		
 		try {
-			connection = pool.take();
+			connection = connectionPool.take();
 			preparedStatement = connection.prepareStatement(SQLCommand.SELECT_USER_BY_LOGIN_PASSWORD);
 			preparedStatement.setString(1, login);
 			preparedStatement.setInt(2, password);
@@ -41,7 +46,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException("Error executing the query 'select_user_id_by_login_password'", e);
 		}finally {
-			pool.closeConnection(connection, preparedStatement, resultSet);
+			connectionPool.closeConnection(connection, preparedStatement, resultSet);
 		}
 		
 		return user;
@@ -50,12 +55,12 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void signUp(String login, int password) throws DAOException {
-		ConnectionPool pool  = ConnectionPool.getInstance();
+		//ConnectionPool connectionPool  = ConnectionPool.getInstance();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		
 		try {
-			connection = pool.take();
+			connection = connectionPool.take();
 			preparedStatement = connection.prepareStatement(SQLCommand.INSERT_USER);
 			preparedStatement.setString(1, login);
 			preparedStatement.setInt(2, password);		
@@ -65,7 +70,7 @@ public class UserDAOImpl implements UserDAO {
 		} catch (SQLException e) {
 			throw new DAOException("Error executing the query 'insert_user'", e);
 		}finally {
-			pool.closeConnection(connection, preparedStatement);
+			connectionPool.closeConnection(connection, preparedStatement);
 		}
 	}
 

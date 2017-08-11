@@ -1,34 +1,22 @@
 package by.htp.task01.service.impl;
 
-import java.io.IOException;
-
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import by.htp.task01.dao.connection.ConnectionPool;
-import by.htp.task01.dao.exception.ConnectionPoolException;
 import by.htp.task01.service.BookService;
 import by.htp.task01.service.exception.ServiceException;
-import by.htp.task01.service.factory.ServiceFactory;
 
 public class TestBookServiceImpl {
-	private final ServiceFactory factory = ServiceFactory.getInstance();
-	private final BookService bookService = factory.getBookService();
+	private BookService bookService;
 	
-	@BeforeClass
-	public static void initSource() throws ConnectionPoolException{
-		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		connectionPool.init();
+	@Before
+	public void instantiateService() {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("root-context.xml");
+		bookService = context.getBean("bookService", BookService.class);
+		context.close();
 	}
-
-	@AfterClass
-	public static void destroySource() throws ConnectionPoolException, IOException{
-		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		connectionPool.close();
-	}
-	
 	
 	@Test  (expected = ServiceException.class)
 	public void testAddNewBook() throws ServiceException{ 

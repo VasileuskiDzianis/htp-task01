@@ -1,7 +1,7 @@
 package by.htp.task01.view;
 
-public final class PrintRespnse {
-	private PrintRespnse() {}
+public final class PrintResponse {
+	private PrintResponse() {}
 	
 	public static void out(String response){
 		System.out.println(response);

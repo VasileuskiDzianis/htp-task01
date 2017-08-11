@@ -5,50 +5,50 @@ import java.util.List;
 
 import by.htp.task01.dao.BookDAO;
 import by.htp.task01.dao.exception.DAOException;
-import by.htp.task01.dao.factory.DAOFactory;
 import by.htp.task01.domain.Book;
 import by.htp.task01.service.BookService;
 import by.htp.task01.service.exception.ServiceException;
 import by.htp.task01.service.validation.ValidationData;
 
 public class BookServiceImpl implements BookService {
+	BookDAO bookDAO;
+
+	public void setBookDAO(BookDAO bookDAO) {
+		this.bookDAO = bookDAO;
+	}
 
 	@Override
-	public void addNewBook(String title, String genre, String author, String year, String quantityStr) throws ServiceException {
-		if(!ValidationData.validBook(title, genre, author, year, quantityStr)){
+	public void addNewBook(String title, String genre, String author, String year, String quantityStr)
+			throws ServiceException {
+		if (!ValidationData.validBook(title, genre, author, year, quantityStr)) {
 			throw new ServiceException("Incorrect data about book");
 		}
-	
+
 		int quantity = 0;
-		try{
+		try {
 			quantity = Integer.parseInt(quantityStr);
-		}catch (IllegalFormatException e) {
+		} catch (IllegalFormatException e) {
 			throw new ServiceException("Year format exception");
 		}
-		
-		DAOFactory daoFactory = DAOFactory.getInstance();
-		BookDAO bookDAO = daoFactory.getBookDAO();
-		
+
 		try {
 			bookDAO.addNewBook(title, author, genre, year, quantity);
 		} catch (DAOException e) {
 			throw new ServiceException("Error adding a book to the library");
 		}
-		
+
 	}
 
 	@Override
-	public void addEditBook(String title, String genre, String author, String year, String quantityStr, String idBookStr) throws ServiceException {
-		if(!ValidationData.validBook(title, genre, author, year, quantityStr, idBookStr)){
+	public void addEditBook(String title, String genre, String author, String year, String quantityStr,
+			String idBookStr) throws ServiceException {
+		if (!ValidationData.validBook(title, genre, author, year, quantityStr, idBookStr)) {
 			throw new ServiceException("Incorrect data about book");
 		}
-		
+
 		int idBook = Integer.parseInt(idBookStr);
 		int quantity = Integer.parseInt(quantityStr);
-		
-		DAOFactory daoFactory = DAOFactory.getInstance();
-		BookDAO bookDAO = daoFactory.getBookDAO();
-		
+
 		try {
 			bookDAO.addEditBook(title, genre, author, year, quantity, idBook);
 		} catch (DAOException e) {
@@ -57,21 +57,19 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> getBooklist() throws ServiceException {
-		DAOFactory daoFactory = DAOFactory.getInstance();
-		BookDAO bookDAO = daoFactory.getBookDAO();
+	public List<Book> getBookList() throws ServiceException {
 		List<Book> booklist = null;
-		
+
 		try {
 			booklist = bookDAO.getBooklist();
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
-		
-		if(booklist == null){
+
+		if (booklist == null) {
 			throw new ServiceException("Booklist not found");
 		}
-		
+
 		return booklist;
 	}
 
