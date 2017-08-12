@@ -1,13 +1,17 @@
 package by.htp.task01.view;
 
+
+
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import by.htp.task01.controller.RequestExecutorController;
 
 public final class View {
+
 	public static void main(String[] args) {
 		String response = null;
-
+		
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("root-context.xml");
 		RequestExecutorController controller = context.getBean("requestExecutorController",
 				RequestExecutorController.class);

@@ -4,8 +4,7 @@ import java.io.IOException;
 
 import by.htp.task01.dao.InitializationDAO;
 import by.htp.task01.dao.connection.ConnectionPool;
-import by.htp.task01.dao.exception.ConnectionPoolException;
-import by.htp.task01.dao.exception.DAOException;
+import by.htp.task01.dao.exception.*;
 
 public class InitializationDAOImpl implements InitializationDAO {
 	private ConnectionPool connectionPool;

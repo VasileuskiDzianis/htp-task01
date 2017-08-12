@@ -46,7 +46,7 @@
 
 	<!-- Command provider -->
 
-	<bean id="commandProvider" class="by.htp.task01.controller.command.CommandProvider">
+	<bean id="commandProvider" class="by.htp.task01.controller.command.CommandProviderImpl">
 		<property name="commandRepository">
 			<map key-type="by.htp.task01.controller.command.CommandName">
 				<entry key="SIGN_IN" value-ref="signIn" />
@@ -62,6 +62,7 @@
 	</bean>
 
 	<!-- Request Executor Controller -->
+
 	<bean id="requestExecutorController" class="by.htp.task01.controller.RequestExecutorController"
 		p:commandProvider-ref="commandProvider" />
 

@@ -5,7 +5,7 @@ import by.htp.task01.dao.exception.DAOException;
 import by.htp.task01.domain.User;
 import by.htp.task01.service.UserService;
 import by.htp.task01.service.exception.ServiceException;
-import by.htp.task01.service.validation.ValidationData;
+import by.htp.task01.service.validation.DataValidator;
 
 public class UserServiceImpl implements UserService {
 
@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void signIn(String login, String password) throws ServiceException {
-		if (!ValidationData.validUser(login, password)) {
+		if (!DataValidator.validUser(login, password)) {
 			throw new ServiceException("Inccorrent user's login or password");
 		}
 
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void signUp(String login, String password) throws ServiceException {
-		if (!ValidationData.validUser(login, password)) {
+		if (!DataValidator.validUser(login, password)) {
 			throw new ServiceException("Incorrent user's login or password");
 		}
 

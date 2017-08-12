@@ -2,12 +2,16 @@ package by.htp.task01.controller.command.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import by.htp.task01.controller.command.Command;
 import by.htp.task01.domain.Book;
 import by.htp.task01.service.BookService;
 import by.htp.task01.service.exception.ServiceException;
 
 public class GetBookList implements Command {
+	private static final Logger LOGGER = Logger.getLogger(AddNewBook.class);
+
 	BookService bookService;
 
 	public void setBookService(BookService bookService) {
@@ -20,9 +24,16 @@ public class GetBookList implements Command {
 
 		try {
 			booklist = bookService.getBookList();
-
-			return "List of books received";
+			StringBuilder result = new StringBuilder();
+			for (Book book : booklist) {
+				result.append("<book>");
+				result.append(book);
+				result.append("</book>");
+			}
+			
+			return result.toString();
 		} catch (ServiceException e) {
+			LOGGER.error("Exception occur, ", e);
 
 			return "Error getting list of books";
 		}

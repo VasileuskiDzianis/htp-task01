@@ -2,31 +2,27 @@ package by.htp.task01.dao.connection;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import by.htp.task01.dao.exception.ConnectionPoolException;
-import by.htp.task01.dao.exception.DAOException;
+import org.apache.log4j.Logger;
 
-public final class ConnectionPool implements Closeable{	
-	private static final ConnectionPool instance = new ConnectionPool();
+import by.htp.task01.dao.exception.*;
+
+public final class ConnectionPool implements Closeable {
+	private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
+
 	private BlockingQueue<Connection> freeConnection;
 	private BlockingQueue<Connection> busyConnection;
-	
+
 	private int poolSize;
 	private String driver;
 	private String user;
 	private String password;
 	private String url;
-	
+
 	public void setPoolSize(int poolSize) {
 		this.poolSize = poolSize;
 	}
@@ -50,25 +46,25 @@ public final class ConnectionPool implements Closeable{
 	private ConnectionPool() {
 
 	}
-	
-	public void init() throws ConnectionPoolException{
+
+	public void init() throws ConnectionPoolException {
 		freeConnection = new ArrayBlockingQueue<Connection>(poolSize);
 		busyConnection = new ArrayBlockingQueue<Connection>(poolSize);
-		
-		try{
+
+		try {
 			Class.forName(driver);
-			for(int i = 0; i < poolSize; i++){
+			for (int i = 0; i < poolSize; i++) {
 				freeConnection.add(DriverManager.getConnection(url, user, password));
 			}
-		}catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			throw new ConnectionPoolException("Can't find database driver class", e);
 		} catch (SQLException e) {
 			throw new ConnectionPoolException("SQLException in ConnectionPool", e);
 		}
-		
+
 	}
-	
-	public Connection take() throws ConnectionPoolException{
+
+	public Connection take() throws ConnectionPoolException {
 		Connection connection = null;
 		try {
 			connection = freeConnection.take();
@@ -78,204 +74,199 @@ public final class ConnectionPool implements Closeable{
 		}
 		return connection;
 	}
-	
-	public void free(Connection connection) throws InterruptedException, DAOException{
-		if(connection == null){
+
+	public void free(Connection connection) throws InterruptedException, DAOException {
+		if (connection == null) {
 			throw new DAOException("Connection is null");
 		}
-		
+
 		Connection tempConnection = connection;
 		connection = null;
 		busyConnection.remove(tempConnection);
 		freeConnection.put(tempConnection);
 	}
-	
-	public static ConnectionPool getInstance(){
-		return instance;
-	}
-	
+
 	@Override
 	public void close() throws IOException {
 		List<Connection> listConnection = new ArrayList<Connection>();
 		listConnection.addAll(this.busyConnection);
 		listConnection.addAll(this.freeConnection);
-		
-		for(Connection connection: listConnection){
+
+		for (Connection connection : listConnection) {
 			try {
-				if(connection != null){
+				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
-//				LOGGER.error(e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
 	}
 
-	public void closeConnection(Connection con, Statement st, PreparedStatement preSt, ResultSet rs){
-		if(con != null){
+	public void closeConnection(Connection con, Statement st, PreparedStatement preSt, ResultSet rs) {
+		if (con != null) {
 			try {
 				free(con);
 			} catch (InterruptedException | DAOException e) {
-//				LOGGER.log(Level.ERROR, "Connection isn't return to the pool", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(st != null){
+
+		if (st != null) {
 			try {
 				st.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "Statement isn't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(preSt != null){
+
+		if (preSt != null) {
 			try {
 				preSt.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "PrepareStatement ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(rs != null){
+
+		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "ResultSet ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
 	}
 
-	public void closeConnection(Connection con, Statement st){
-		if(con != null){
+	public void closeConnection(Connection con, Statement st) {
+		if (con != null) {
 			try {
 				free(con);
 			} catch (InterruptedException | DAOException e) {
-//				LOGGER.log(Level.ERROR, "Connection isn't return to the pool", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(st != null){
+
+		if (st != null) {
 			try {
 				st.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "Statement isn't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
 	}
 
-	public void closeConnection(Connection con, PreparedStatement preSt){
-		if(con != null){
+	public void closeConnection(Connection con, PreparedStatement preSt) {
+		if (con != null) {
 			try {
 				free(con);
 			} catch (InterruptedException | DAOException e) {
-//				LOGGER.log(Level.ERROR, "Connection isn't return to the pool", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(preSt != null){
+
+		if (preSt != null) {
 			try {
 				preSt.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "PrepareStatement ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
 	}
-	
-	public void closeConnection(Connection con, ResultSet rs){
-		if(con != null){
+
+	public void closeConnection(Connection con, ResultSet rs) {
+		if (con != null) {
 			try {
 				free(con);
 			} catch (InterruptedException | DAOException e) {
-//				LOGGER.log(Level.ERROR, "Connection isn't return to the pool", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(rs != null){
+
+		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "ResultSet ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
 	}
-	
-	public void closeConnection(Connection con, Statement st, PreparedStatement preSt){
-		if(con != null){
+
+	public void closeConnection(Connection con, Statement st, PreparedStatement preSt) {
+		if (con != null) {
 			try {
 				free(con);
 			} catch (InterruptedException | DAOException e) {
-//				LOGGER.log(Level.ERROR, "Connection isn't return to the pool", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(st != null){
+
+		if (st != null) {
 			try {
 				st.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "Statement isn't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(preSt != null){
+
+		if (preSt != null) {
 			try {
 				preSt.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "PrepareStatement ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
+
 	}
 
-	public void closeConnection(Connection con, PreparedStatement preSt, ResultSet rs){
-		if(con != null){
+	public void closeConnection(Connection con, PreparedStatement preSt, ResultSet rs) {
+		if (con != null) {
 			try {
 				free(con);
 			} catch (InterruptedException | DAOException e) {
-//				LOGGER.log(Level.ERROR, "Connection isn't return to the pool", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(preSt != null){
+
+		if (preSt != null) {
 			try {
 				preSt.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "PrepareStatement ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(rs != null){
+
+		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "ResultSet ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
 	}
 
-	public void closeConnection(Connection con, Statement st, ResultSet rs){
-		if(con != null){
+	public void closeConnection(Connection con, Statement st, ResultSet rs) {
+		if (con != null) {
 			try {
 				free(con);
 			} catch (InterruptedException | DAOException e) {
-//				LOGGER.log(Level.ERROR, "Connection isn't return to the pool", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(st != null){
+
+		if (st != null) {
 			try {
 				st.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "Statement isn't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
-		
-		if(rs != null){
+
+		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-//				LOGGER.log(Level.ERROR, "ResultSet ins't closed", e);
+				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
 	}
-	
 }

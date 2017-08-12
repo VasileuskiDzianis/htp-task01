@@ -1,19 +1,11 @@
 package by.htp.task01.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
-import by.htp.task01.dao.BookDAO;
-import by.htp.task01.dao.ColumnLabel;
-import by.htp.task01.dao.SQLCommand;
+import by.htp.task01.dao.*;
 import by.htp.task01.dao.connection.ConnectionPool;
-import by.htp.task01.dao.exception.ConnectionPoolException;
-import by.htp.task01.dao.exception.DAOException;
+import by.htp.task01.dao.exception.*;
 import by.htp.task01.domain.Book;
 
 public class BookDAOImpl implements BookDAO {
@@ -74,7 +66,6 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public List<Book> getBooklist() throws DAOException {
-		// ConnectionPool connectionPool = ConnectionPool.getInstance();
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -86,7 +77,6 @@ public class BookDAOImpl implements BookDAO {
 			resultSet = statement.executeQuery(SQLCommand.SELECT_BOOK);
 
 			booklist = new ArrayList<Book>();
-			;
 			Book book = null;
 
 			while (resultSet.next()) {
@@ -111,5 +101,4 @@ public class BookDAOImpl implements BookDAO {
 
 		return booklist;
 	}
-
 }
