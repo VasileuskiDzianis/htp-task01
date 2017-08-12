@@ -8,7 +8,7 @@ import by.htp.task01.dao.exception.DAOException;
 import by.htp.task01.domain.Book;
 import by.htp.task01.service.BookService;
 import by.htp.task01.service.exception.ServiceException;
-import by.htp.task01.service.validation.DataValidator;
+import by.htp.task01.service.validation.DataValidatorService;
 
 public class BookServiceImpl implements BookService {
 	BookDAO bookDAO;
@@ -20,7 +20,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void addNewBook(String title, String genre, String author, String year, String quantityStr)
 			throws ServiceException {
-		if (!DataValidator.validBook(title, genre, author, year, quantityStr)) {
+		if (!DataValidatorService.validBook(title, genre, author, year, quantityStr)) {
 			throw new ServiceException("Incorrect data about book");
 		}
 
@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void addEditBook(String title, String genre, String author, String year, String quantityStr,
 			String idBookStr) throws ServiceException {
-		if (!DataValidator.validBook(title, genre, author, year, quantityStr, idBookStr)) {
+		if (!DataValidatorService.validBook(title, genre, author, year, quantityStr, idBookStr)) {
 			throw new ServiceException("Incorrect data about book");
 		}
 

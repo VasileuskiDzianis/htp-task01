@@ -2,11 +2,11 @@ package by.htp.task01.service.validation;
 
 import java.util.regex.Pattern;
 
-public final class DataValidator {
+public final class DataValidatorService {
 	public static final String NUMBER_REGULAR = "\\d+";
 	public static final String YEAR_REGULAR = "[0-9]{4}";
 	
-	private DataValidator() {}
+	private DataValidatorService() {}
 
 	public static boolean validBook(String title, String genre, String author, String year, String quantity){
 		if(validString(title) && validString(title) && validString(title) 

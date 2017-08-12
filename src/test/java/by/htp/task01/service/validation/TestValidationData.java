@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import by.htp.task01.service.validation.DataValidator;
+import by.htp.task01.service.validation.DataValidatorService;
 
 public class TestValidationData {
 
@@ -13,13 +13,13 @@ public class TestValidationData {
 	 */
 	@Test
 	public void testValidBook(){
-		boolean result = DataValidator.validBook("BookTitle", "MyGenre", "MyAuthor", "yearStr", "10");
+		boolean result = DataValidatorService.validBook("BookTitle", "MyGenre", "MyAuthor", "yearStr", "10");
 		assertFalse(result);
 	}
 	
 	@Test
 	public void testValidUser(){
-		boolean result = DataValidator.validUser(null, null);
+		boolean result = DataValidatorService.validUser(null, null);
 		assertFalse(result);
 	}
 
