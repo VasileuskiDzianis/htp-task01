@@ -6,7 +6,7 @@ import by.htp.task01.dao.exception.DAOException;
 import by.htp.task01.domain.Book;
 
 public interface BookDAO {
-	void addNewBook(String title, String authro, String genre, String year, int quantity) throws DAOException;
-	void addEditBook(String title, String genre, String author, String year, int quantity, int idBook) throws DAOException;
+	void addNewBook(Book book) throws DAOException;
+	void addEditBook(Book book) throws DAOException;
 	List<Book> getBooklist() throws DAOException;
 }

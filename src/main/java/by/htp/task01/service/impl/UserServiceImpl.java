@@ -5,7 +5,6 @@ import by.htp.task01.dao.exception.DAOException;
 import by.htp.task01.domain.User;
 import by.htp.task01.service.UserService;
 import by.htp.task01.service.exception.ServiceException;
-import by.htp.task01.service.validation.DataValidatorService;
 
 public class UserServiceImpl implements UserService {
 
@@ -16,15 +15,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void signIn(String login, String password) throws ServiceException {
-		if (!DataValidatorService.validUser(login, password)) {
-			throw new ServiceException("Inccorrent user's login or password");
-		}
+	public void signIn(User user) throws ServiceException {
+		
+		encryptUserPassword(user);
 
 		try {
-			User user = userDAO.signIn(login, password.hashCode());
-			if (user == null) {
-				throw new ServiceException("User is not found");
+			userDAO.signIn(user);
+			if (user.getId() == 0) {
+				throw new ServiceException("User wasn't found");
 			}
 		} catch (DAOException e) {
 			throw new ServiceException("Error sign in", e);
@@ -32,17 +30,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void signUp(String login, String password) throws ServiceException {
-		if (!DataValidatorService.validUser(login, password)) {
-			throw new ServiceException("Incorrent user's login or password");
-		}
-
-		// Attention String_paswword convert to int_password(HashCode)
+	public void signUp(User user) throws ServiceException {
+		
+		encryptUserPassword(user);
+		
 		try {
-			userDAO.signUp(login, password.hashCode());
+			userDAO.signUp(user);
 		} catch (DAOException e) {
 			throw new ServiceException("Error sign up", e);
 		}
+	}
+	
+	private void encryptUserPassword(User user) {
+		
+		String encryptedPassword = Integer.toString(user.getPassword().hashCode());
+				
+		user.setPassword(encryptedPassword);
 	}
 
 }

@@ -1,12 +1,21 @@
 by.htp.task01.view.View - isn't a view, it's just a test
-by.htp.task01.service.BookService - has to many parameters in methods
+
+fixed - by.htp.task01.service.BookService - has to many parameters in methods
 fixed - by.htp.task01.service.InitializationService.initialization() - bad name for method, replace with verb
 fixed - by.htp.task01.service.validation.RegularExpression - bad idea to store constants in separate class
 fixed - by.htp.task01.service.validation.ValidationData - bad name for class. Rename to DataValidator
-by.htp.task01.service.validation.ValidationData - method names
-by.htp.task01.service.validation.ValidationData - long conditions
-by.htp.task01.service.validation.ValidationData - to separate return statement
-by.htp.task01.service.impl.BookServiceImpl - bad exception handling, we loose stack trace
-by.htp.task01.dao.ColumnLabel - try to replace with Enum
-by.htp.task01.view.PrintResponse - bad class name
+
+fixed - by.htp.task01.service.validation.ValidationData - method names
+fixed - by.htp.task01.service.validation.ValidationData - long conditions
+fixed - by.htp.task01.service.validation.ValidationData - to separate return statement
+
+fixed - by.htp.task01.service.impl.BookServiceImpl - bad exception handling, we loose stack trace
+
+fixed - by.htp.task01.view.PrintResponse - bad class name
 fixed - by.htp.task01.controller.command.CommandProviderImpl - extract interface
+fixed - by.htp.task01.service.impl.BookServiceImpl.getBookList() - throws Exception if (booklist == null). Let's return empty list.
+
+fixed - by.htp.task01.domain.User - int type bad idea for password. What if we change encryption method for password?
+fixed - by.htp.task01.service.impl.UserServiceImpl - password convert and comment
+
+add real tests for dao.

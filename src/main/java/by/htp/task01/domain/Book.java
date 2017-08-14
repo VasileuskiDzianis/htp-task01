@@ -2,9 +2,9 @@ package by.htp.task01.domain;
 
 import java.io.Serializable;
 
-public class Book implements Serializable{
+public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id;
 	private String title;
 	private String genre;
@@ -12,8 +12,9 @@ public class Book implements Serializable{
 	private String year;
 	private int quantity;
 	private boolean status;
-	
-	public Book() {}
+
+	public Book() {
+	}
 
 	public int getId() {
 		return id;

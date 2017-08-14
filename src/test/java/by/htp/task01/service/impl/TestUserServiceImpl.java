@@ -21,6 +21,6 @@ public class TestUserServiceImpl {
 	@Test (expected = NullPointerException.class)
 	public void signUp() throws ServiceException{
 
-		userService.signUp("Dylan O'Brien", "12345678");
+		userService.signUp(null);
 	}
 }

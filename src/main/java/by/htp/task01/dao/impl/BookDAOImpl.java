@@ -28,18 +28,18 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void addNewBook(String title, String author, String genre, String year, int quantity) throws DAOException {
+	public void addNewBook(Book book) throws DAOException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
 			connection = connectionPool.take();
 			preparedStatement = connection.prepareStatement(INSERT_BOOK);
-			preparedStatement.setString(1, title);
-			preparedStatement.setString(2, author);
-			preparedStatement.setString(3, genre);
-			preparedStatement.setString(4, year);
-			preparedStatement.setInt(5, quantity);
+			preparedStatement.setString(1, book.getTitle());
+			preparedStatement.setString(2, book.getAuthor());
+			preparedStatement.setString(3, book.getGenre());
+			preparedStatement.setString(4, book.getYear());
+			preparedStatement.setInt(5, book.getQuantity());
 			preparedStatement.executeUpdate();
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("There was a problem connecting to the database", e);
@@ -51,20 +51,19 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void addEditBook(String title, String genre, String author, String year, int quantity, int idBook)
-			throws DAOException {
+	public void addEditBook(Book book) throws DAOException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
 			connection = connectionPool.take();
 			preparedStatement = connection.prepareStatement(UPDATE_BOOK);
-			preparedStatement.setString(1, title);
-			preparedStatement.setString(2, author);
-			preparedStatement.setString(3, genre);
-			preparedStatement.setString(4, year);
-			preparedStatement.setInt(5, quantity);
-			preparedStatement.setInt(6, idBook);
+			preparedStatement.setString(1, book.getTitle());
+			preparedStatement.setString(2, book.getAuthor());
+			preparedStatement.setString(3, book.getGenre());
+			preparedStatement.setString(4, book.getYear());
+			preparedStatement.setInt(5, book.getQuantity());
+			preparedStatement.setInt(6, book.getId());
 			preparedStatement.executeUpdate();
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("There was a problem connecting to the database", e);
@@ -101,7 +100,6 @@ public class BookDAOImpl implements BookDAO {
 				book.setStatus(resultSet.getBoolean(BOOK_STATUS));
 				booklist.add(book);
 			}
-
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("There was a problem connecting to the database", e);
 		} catch (SQLException e) {

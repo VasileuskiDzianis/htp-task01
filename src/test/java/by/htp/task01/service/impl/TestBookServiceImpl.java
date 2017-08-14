@@ -20,13 +20,13 @@ public class TestBookServiceImpl {
 	
 	@Test  (expected = ServiceException.class)
 	public void testAddNewBook() throws ServiceException{ 
-		bookService.addNewBook(null, null, null, null, null);
+		bookService.addNewBook(null);
 	}
 
 	@Test
 	public void testAddEditBook(){
 		try {
-			bookService.addEditBook(null, "MyAuthor", "MyGenre", "2017", "10", "1");
+			bookService.addEditBook(null);
 		} catch (ServiceException e) {
 			Assert.assertEquals("Incorrect data about book", e.getMessage());
 		}

@@ -7,7 +7,7 @@ public class User implements Serializable {
 
 	private int id;
 	private String login;
-	private int password;
+	private String password;
 
 	public User() {
 	}
@@ -28,11 +28,11 @@ public class User implements Serializable {
 		this.login = login;
 	}
 
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -42,7 +42,7 @@ public class User implements Serializable {
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + password;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
 
@@ -62,7 +62,10 @@ public class User implements Serializable {
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
-		if (password != other.password)
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
 		return true;
 	}
@@ -71,5 +74,4 @@ public class User implements Serializable {
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", password=" + password + "]";
 	}
-
 }
