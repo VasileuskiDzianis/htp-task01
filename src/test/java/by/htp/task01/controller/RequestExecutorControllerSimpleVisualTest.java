@@ -1,4 +1,4 @@
-package by.htp.task01.view;
+package by.htp.task01.controller;
 
 
 
@@ -6,8 +6,9 @@ package by.htp.task01.view;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import by.htp.task01.controller.RequestExecutorController;
+import by.htp.task01.view.ResponsePrinter;
 
-public final class View {
+public final class RequestExecutorControllerSimpleVisualTest {
 
 	public static void main(String[] args) {
 		String response = null;
