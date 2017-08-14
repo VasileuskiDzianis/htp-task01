@@ -9,7 +9,7 @@ import by.htp.task01.service.exception.ServiceException;
 import by.htp.task01.service.validation.DataValidatorService;
 
 public class SignIn implements Command {
-	private static final Logger LOGGER = Logger.getLogger(InitializeSource.class);
+	private static final Logger LOGGER = Logger.getLogger(SignIn.class);
 	
 	private UserService userService;
 

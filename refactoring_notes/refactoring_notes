@@ -6,7 +6,7 @@ fixed - by.htp.task01.service.validation.RegularExpression - not good idea to st
 fixed - by.htp.task01.service.validation.ValidationData - not good name for class. Rename to DataValidator
 
 fixed - by.htp.task01.service.validation.ValidationData - method names
-fixed - by.htp.task01.service.validation.ValidationData - long conditions
+not fixed - by.htp.task01.service.validation.ValidationData - long conditions
 fixed - by.htp.task01.service.validation.ValidationData - separate return statement
 
 fixed - by.htp.task01.service.impl.BookServiceImpl - bad exception handling, we loose stack trace
@@ -15,5 +15,7 @@ fixed - by.htp.task01.view.PrintResponse - bad class name with verb
 fixed - by.htp.task01.controller.command.CommandProviderImpl - extract interface
 fixed - by.htp.task01.service.impl.BookServiceImpl.getBookList() - throws Exception if (booklist == null). Let's return empty list.
 
-fixed - by.htp.task01.domain.User - int type bad idea for password. What if we change encryption method for password?
+fixed - by.htp.task01.domain.User - int type not good idea for password. What if we change encryption method for password?
 fixed - by.htp.task01.service.impl.UserServiceImpl - password convert and comment
+
+fixed - by.htp.task01.service.impl.TestBookServiceImpl - it tests data validation.

@@ -12,10 +12,6 @@
 	<bean id="userService" class="by.htp.task01.service.impl.UserServiceImpl"
 		p:userDAO-ref="userDAO" />
 
-
-	<bean id="initializationService" class="by.htp.task01.service.impl.InitializationServiceImpl"
-		p:initializationDAO-ref="initializationDAO" />
-
 	<bean id="bookService" class="by.htp.task01.service.impl.BookServiceImpl"
 		p:bookDAO-ref="bookDAO" />
 
@@ -26,12 +22,6 @@
 
 	<bean id="signUp" class="by.htp.task01.controller.command.impl.SignUp"
 		p:userService-ref="userService" />
-
-	<bean id="initializeSource" class="by.htp.task01.controller.command.impl.InitializeSource"
-		p:initializationService-ref="initializationService" />
-
-	<bean id="destroySource" class="by.htp.task01.controller.command.impl.DestroySource"
-		p:initializationService-ref="initializationService" />
 
 	<bean id="addEditedBook" class="by.htp.task01.controller.command.impl.AddEditedBook"
 		p:bookService-ref="bookService" />
@@ -51,8 +41,6 @@
 			<map key-type="by.htp.task01.controller.command.CommandName">
 				<entry key="SIGN_IN" value-ref="signIn" />
 				<entry key="SIGN_UP" value-ref="signUp" />
-				<entry key="INITIALIZE_SOURCE" value-ref="initializeSource" />
-				<entry key="DESTROY_SOURCE" value-ref="destroySource" />
 				<entry key="ADD_EDITED_BOOK" value-ref="addEditedBook" />
 				<entry key="ADD_NEW_BOOK" value-ref="addNewBook" />
 				<entry key="GET_BOOKLIST" value-ref="getBookList" />

@@ -1,2 +1,16 @@
-
-2017-08-12 11:48:59 ERROR View:19 - Test log4j
+2017-08-14 19:18:34 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:34 WARN  ConnectionPool:104 - Spring destroys ConnectionPool
+2017-08-14 19:18:34 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:34 WARN  ConnectionPool:104 - Spring destroys ConnectionPool
+2017-08-14 19:18:34 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:34 WARN  ConnectionPool:104 - Spring destroys ConnectionPool
+2017-08-14 19:18:34 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:34 WARN  ConnectionPool:104 - Spring destroys ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:104 - Spring destroys ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:104 - Spring destroys ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:104 - Spring destroys ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:58 - Spring initializes ConnectionPool
+2017-08-14 19:18:35 WARN  ConnectionPool:104 - Spring destroys ConnectionPool

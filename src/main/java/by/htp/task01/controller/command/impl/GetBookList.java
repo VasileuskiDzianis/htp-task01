@@ -10,7 +10,7 @@ import by.htp.task01.service.BookService;
 import by.htp.task01.service.exception.ServiceException;
 
 public class GetBookList implements Command {
-	private static final Logger LOGGER = Logger.getLogger(AddNewBook.class);
+	private static final Logger LOGGER = Logger.getLogger(GetBookList.class);
 
 	BookService bookService;
 

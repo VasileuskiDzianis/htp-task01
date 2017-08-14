@@ -13,7 +13,7 @@ public class TestUserServiceImpl {
 	
 	@Before
 	public void instantiateService() {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("root-context.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-root-context.xml");
 		userService = context.getBean("userService", UserService.class);
 		context.close();
 	}

@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void signIn(User user) throws ServiceException {
-		
-		encryptUserPassword(user);
+
+		user.setPassword(getEncryptedPassword(user.getPassword()));
 
 		try {
 			userDAO.signIn(user);
@@ -31,21 +31,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void signUp(User user) throws ServiceException {
-		
-		encryptUserPassword(user);
-		
+
+		user.setPassword(getEncryptedPassword(user.getPassword()));
+
 		try {
 			userDAO.signUp(user);
 		} catch (DAOException e) {
 			throw new ServiceException("Error sign up", e);
 		}
 	}
-	
-	private void encryptUserPassword(User user) {
-		
-		String encryptedPassword = Integer.toString(user.getPassword().hashCode());
-				
-		user.setPassword(encryptedPassword);
-	}
 
+	private String getEncryptedPassword(String password) {
+
+		return Integer.toString(password.hashCode());
+	}
 }

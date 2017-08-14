@@ -47,7 +47,6 @@ public class AddNewBook implements Command {
 
 			return "Incorrect book data";
 		}
-
 		try {
 			bookService.addNewBook(book);
 

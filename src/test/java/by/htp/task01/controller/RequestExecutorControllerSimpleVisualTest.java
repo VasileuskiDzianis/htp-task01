@@ -1,8 +1,5 @@
 package by.htp.task01.controller;
 
-
-
-
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import by.htp.task01.controller.RequestExecutorController;
@@ -13,15 +10,10 @@ public final class RequestExecutorControllerSimpleVisualTest {
 	public static void main(String[] args) {
 		String response = null;
 		
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("root-context.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-root-context.xml");
 		RequestExecutorController controller = context.getBean("requestExecutorController",
 				RequestExecutorController.class);
-		context.close();
-
-		// ##Initialization DB connection##
-		response = controller.executeAction("initialize_source ");
-		ResponsePrinter.out(response);
-
+		
 		// ##Sign up user
 		response = controller.executeAction("sign_up Василий_Пупкин 12345678");
 		ResponsePrinter.out(response);
@@ -49,8 +41,6 @@ public final class RequestExecutorControllerSimpleVisualTest {
 		response = controller.executeAction("remove_book 10");
 		ResponsePrinter.out(response);
 
-		// ##Destroy DB connection##
-		response = controller.executeAction("destroy_source ");
-		ResponsePrinter.out(response);
+		context.close();
 	}
 }

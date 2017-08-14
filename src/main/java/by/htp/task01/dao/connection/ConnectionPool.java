@@ -1,6 +1,5 @@
 package by.htp.task01.dao.connection;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -11,7 +10,7 @@ import org.apache.log4j.Logger;
 
 import by.htp.task01.dao.exception.*;
 
-public final class ConnectionPool implements Closeable {
+public final class ConnectionPool {
 	private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
 
 	private BlockingQueue<Connection> freeConnection;
@@ -56,6 +55,7 @@ public final class ConnectionPool implements Closeable {
 			for (int i = 0; i < poolSize; i++) {
 				freeConnection.add(DriverManager.getConnection(url, user, password));
 			}
+			LOGGER.debug("Spring initializes ConnectionPool");
 		} catch (ClassNotFoundException e) {
 			throw new ConnectionPoolException("Can't find database driver class", e);
 		} catch (SQLException e) {
@@ -86,7 +86,6 @@ public final class ConnectionPool implements Closeable {
 		freeConnection.put(tempConnection);
 	}
 
-	@Override
 	public void close() throws IOException {
 		List<Connection> listConnection = new ArrayList<Connection>();
 		listConnection.addAll(this.busyConnection);
@@ -97,10 +96,12 @@ public final class ConnectionPool implements Closeable {
 				if (connection != null) {
 					connection.close();
 				}
+
 			} catch (SQLException e) {
 				LOGGER.error("Connection Pool Exception occur, ", e);
 			}
 		}
+		LOGGER.debug("Spring destroys ConnectionPool");
 	}
 
 	public void closeConnection(Connection con, Statement st, PreparedStatement preSt, ResultSet rs) {

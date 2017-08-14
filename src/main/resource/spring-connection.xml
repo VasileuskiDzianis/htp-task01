@@ -6,17 +6,15 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<bean id="connectionPool" class="by.htp.task01.dao.connection.ConnectionPool"
-		destroy-method="" p:driver="com.mysql.cj.jdbc.Driver" p:user="root"
-		p:password="qwerty" p:url="jdbc:mysql://127.0.0.1/LibraryDB?useSSL=false"
+		init-method="init" destroy-method="close" 
+		p:driver="com.mysql.cj.jdbc.Driver"
+		p:user="root" p:password="qwerty"
+		p:url="jdbc:mysql://127.0.0.1/LibraryDB?useSSL=false" 
 		p:poolSize="5" />
 
 	<bean id="userDAO" class="by.htp.task01.dao.impl.UserDAOImpl"
 		p:connectionPool-ref="connectionPool" />
 
-	<bean id="initializationDAO" class="by.htp.task01.dao.impl.InitializationDAOImpl"
-		p:connectionPool-ref="connectionPool" />
-
 	<bean id="bookDAO" class="by.htp.task01.dao.impl.BookDAOImpl"
 		p:connectionPool-ref="connectionPool" />
-
 </beans>

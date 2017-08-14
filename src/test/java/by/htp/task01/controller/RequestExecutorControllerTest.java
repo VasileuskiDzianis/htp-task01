@@ -9,14 +9,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class RequestExecutorControllerTest {
 	RequestExecutorController controller;
+	ClassPathXmlApplicationContext context;
 
 	@Before
 	public void initializeSource() {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("root-context.xml");
+		context = new ClassPathXmlApplicationContext("spring-root-context.xml");
 		controller = context.getBean("requestExecutorController", RequestExecutorController.class);
-		context.close();
-
-		controller.executeAction("initialize_source ");
 	}
 
 	@Test
@@ -56,7 +54,6 @@ public class RequestExecutorControllerTest {
 
 	@After
 	public void destroySource() {
-		
-		controller.executeAction("destroy_source ");
+		context.close();
 	}
 }
