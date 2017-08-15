@@ -12,6 +12,8 @@ import by.htp.task01.dao.exception.*;
 
 public final class ConnectionPool {
 	private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
+	
+	private static final int DEFAULT_POOL_SIZE = 5;
 
 	private BlockingQueue<Connection> freeConnection;
 	private BlockingQueue<Connection> busyConnection;
@@ -47,6 +49,11 @@ public final class ConnectionPool {
 	}
 
 	public void init() throws ConnectionPoolException {
+		
+		if (poolSize == 0) {
+			poolSize = DEFAULT_POOL_SIZE;
+		}
+		
 		freeConnection = new ArrayBlockingQueue<Connection>(poolSize);
 		busyConnection = new ArrayBlockingQueue<Connection>(poolSize);
 
