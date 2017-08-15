@@ -5,12 +5,15 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:property-placeholder location="classpath:database.properties"/>
+	
 	<bean id="connectionPool" class="by.htp.task01.dao.connection.ConnectionPool"
 		init-method="init" destroy-method="close" 
-		p:driver="com.mysql.cj.jdbc.Driver"
-		p:user="root" p:password="qwerty"
-		p:url="jdbc:mysql://127.0.0.1/LibraryDB?useSSL=false" 
-		p:poolSize="5" />
+		p:driver="${db.driver}"
+		p:user="${db.user}" 
+		p:password="${db.password}"
+		p:url="${db.url}" 
+		p:poolSize="${db.poolsize}" />
 
 	<bean id="userDAO" class="by.htp.task01.dao.impl.UserDAOImpl"
 		p:connectionPool-ref="connectionPool" />
