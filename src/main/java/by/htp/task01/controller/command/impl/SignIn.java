@@ -31,7 +31,7 @@ public class SignIn implements Command {
 			user.setPassword(password);
 		} else {
 			
-			return "Inccorrent user's login or password";
+			return "Incorrect user's login or password";
 		}
 
 		try {
