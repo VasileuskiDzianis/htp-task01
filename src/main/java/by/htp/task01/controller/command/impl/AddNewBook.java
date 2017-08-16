@@ -1,6 +1,8 @@
 package by.htp.task01.controller.command.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import by.htp.task01.controller.command.Command;
 import by.htp.task01.domain.Book;
@@ -8,14 +10,12 @@ import by.htp.task01.service.BookService;
 import by.htp.task01.service.exception.ServiceException;
 import by.htp.task01.service.validation.DataValidatorService;
 
+@Component
 public class AddNewBook implements Command {
 	private static final Logger LOGGER = Logger.getLogger(AddNewBook.class);
 
+	@Autowired
 	BookService bookService;
-
-	public void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
 
 	@Override
 	public String executeCommand(String request) {

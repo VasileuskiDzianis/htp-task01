@@ -3,11 +3,15 @@ package by.htp.task01.dao.impl;
 import java.sql.*;
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import by.htp.task01.dao.*;
 import by.htp.task01.dao.connection.ConnectionPool;
 import by.htp.task01.dao.exception.*;
 import by.htp.task01.domain.Book;
 
+@Repository
 public class BookDAOImpl implements BookDAO {
 	private static final String INSERT_BOOK = "INSERT INTO book (b_title, b_author, b_genre, b_year, b_quantity) VALUES (?,?,?,?,?)";
 	private static final String UPDATE_BOOK = "UPDATE book SET b_title = ?, b_author = ?, b_genre = ?, b_year = ?, b_quantity = ? WHERE b_id = ?";
@@ -21,11 +25,8 @@ public class BookDAOImpl implements BookDAO {
 	private static final String BOOK_QUANTITY = "b_quantity";
 	private static final String BOOK_STATUS = "b_status";
 
+	@Autowired
 	private ConnectionPool connectionPool;
-
-	public void setConnectionPool(ConnectionPool connectionPool) {
-		this.connectionPool = connectionPool;
-	}
 
 	@Override
 	public void addNewBook(Book book) throws DAOException {

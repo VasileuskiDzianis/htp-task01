@@ -2,22 +2,23 @@ package by.htp.task01.dao.impl;
 
 import java.sql.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import by.htp.task01.dao.*;
 import by.htp.task01.dao.connection.ConnectionPool;
 import by.htp.task01.dao.exception.*;
 import by.htp.task01.domain.User;
 
+@Repository
 public class UserDAOImpl implements UserDAO {
 	private static final String INSERT_USER_REQUEST = "INSERT INTO user (u_login, u_password) VALUES (?,?)";
 	private static final String SELECT_USER_BY_LOGIN_PASSWORD_REQUEST = "SELECT u_id, u_login, u_password FROM user WHERE u_login = ? AND u_password = ?";
 
 	private static final String USER_ID_FIELD = "u_id";
 
+	@Autowired
 	private ConnectionPool connectionPool;
-
-	public void setConnectionPool(ConnectionPool connectionPool) {
-		this.connectionPool = connectionPool;
-	}
 
 	@Override
 	public void signIn(User user) throws DAOException {

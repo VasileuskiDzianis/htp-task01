@@ -2,12 +2,13 @@ package by.htp.task01.controller.command;
 
 import java.util.Map;
 
-public final class CommandProviderImpl implements CommandProvider {
-	private Map<CommandName, Command> commandRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-	public void setCommandRepository(Map<CommandName, Command> commandRepository) {
-		this.commandRepository = commandRepository;
-	}
+@Component("commandProvider")
+public final class CommandProviderImpl implements CommandProvider {
+	@Autowired
+	private Map<CommandName, Command> commandRepository;
 
 	@Override
 	public Command getCommand(String key) {

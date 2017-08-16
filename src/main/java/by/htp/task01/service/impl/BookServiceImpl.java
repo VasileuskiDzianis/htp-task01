@@ -1,8 +1,13 @@
 package by.htp.task01.service.impl;
 
-import java.util.ArrayList;
+import static by.htp.task01.service.validation.DataValidatorService.validateString;
+import static by.htp.task01.service.validation.DataValidatorService.validateYear;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import by.htp.task01.dao.BookDAO;
 import by.htp.task01.dao.exception.DAOException;
@@ -10,15 +15,11 @@ import by.htp.task01.domain.Book;
 import by.htp.task01.service.BookService;
 import by.htp.task01.service.exception.ServiceException;
 
-import static by.htp.task01.service.validation.DataValidatorService.validateString;
-import static by.htp.task01.service.validation.DataValidatorService.validateYear;
-
+@Service("bookService")
 public class BookServiceImpl implements BookService {
+	
+	@Autowired
 	BookDAO bookDAO;
-
-	public void setBookDAO(BookDAO bookDAO) {
-		this.bookDAO = bookDAO;
-	}
 
 	@Override
 	public void addNewBook(Book book) throws ServiceException {

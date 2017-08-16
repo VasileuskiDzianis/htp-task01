@@ -1,5 +1,8 @@
 package by.htp.task01.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import by.htp.task01.dao.UserDAO;
 import by.htp.task01.dao.exception.DAOException;
 import by.htp.task01.domain.User;
@@ -7,13 +10,11 @@ import by.htp.task01.service.UserService;
 import by.htp.task01.service.exception.ServiceException;
 import by.htp.task01.service.validation.DataValidatorService;
 
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
+	@Autowired
 	private UserDAO userDAO;
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
 
 	@Override
 	public void signIn(User user) throws ServiceException {

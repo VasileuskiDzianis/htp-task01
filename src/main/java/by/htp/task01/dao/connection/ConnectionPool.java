@@ -6,10 +6,18 @@ import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Repository;
 
 import by.htp.task01.dao.exception.*;
 
+@Repository
+@PropertySource("classpath:database.properties")
 public final class ConnectionPool {
 	private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
 	
@@ -18,10 +26,19 @@ public final class ConnectionPool {
 	private BlockingQueue<Connection> freeConnection;
 	private BlockingQueue<Connection> busyConnection;
 
+	@Value("${db.poolsize}")
 	private int poolSize;
+	
+	@Value("${db.driver}")
 	private String driver;
+	
+	@Value("${db.user}")
 	private String user;
+	
+	@Value("${db.password}")
 	private String password;
+	
+	@Value("${db.url}")
 	private String url;
 
 	public void setPoolSize(int poolSize) {
@@ -48,6 +65,7 @@ public final class ConnectionPool {
 
 	}
 
+	@PostConstruct
 	public void init() throws ConnectionPoolException {
 		
 		if (poolSize == 0) {
@@ -93,6 +111,7 @@ public final class ConnectionPool {
 		freeConnection.put(tempConnection);
 	}
 
+	@PreDestroy
 	public void close() throws IOException {
 		List<Connection> listConnection = new ArrayList<Connection>();
 		listConnection.addAll(this.busyConnection);

@@ -5,53 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<import resource="spring-connection.xml" />
-
-	<!-- Services beans -->
-
-	<bean id="userService" class="by.htp.task01.service.impl.UserServiceImpl"
-		p:userDAO-ref="userDAO" />
-
-	<bean id="bookService" class="by.htp.task01.service.impl.BookServiceImpl"
-		p:bookDAO-ref="bookDAO" />
-
-	<!-- Commands beans -->
-
-	<bean id="signIn" class="by.htp.task01.controller.command.impl.SignIn"
-		p:userService-ref="userService" />
-
-	<bean id="signUp" class="by.htp.task01.controller.command.impl.SignUp"
-		p:userService-ref="userService" />
-
-	<bean id="addEditedBook" class="by.htp.task01.controller.command.impl.AddEditedBook"
-		p:bookService-ref="bookService" />
-
-	<bean id="addNewBook" class="by.htp.task01.controller.command.impl.AddNewBook"
-		p:bookService-ref="bookService" />
-
-	<bean id="getBookList" class="by.htp.task01.controller.command.impl.GetBookList"
-		p:bookService-ref="bookService" />
-
-	<bean id="wrongRequest" class="by.htp.task01.controller.command.impl.WrongRequest" />
-
-	<!-- Command provider -->
-
-	<bean id="commandProvider" class="by.htp.task01.controller.command.CommandProviderImpl">
-		<property name="commandRepository">
-			<map key-type="by.htp.task01.controller.command.CommandName">
-				<entry key="SIGN_IN" value-ref="signIn" />
-				<entry key="SIGN_UP" value-ref="signUp" />
-				<entry key="ADD_EDITED_BOOK" value-ref="addEditedBook" />
-				<entry key="ADD_NEW_BOOK" value-ref="addNewBook" />
-				<entry key="GET_BOOKLIST" value-ref="getBookList" />
-				<entry key="WRONG_REQUEST" value-ref="wrongRequest" />
-			</map>
-		</property>
-	</bean>
-
-	<!-- Request Executor Controller -->
-
-	<bean id="requestExecutorController" class="by.htp.task01.controller.RequestExecutorController"
-		p:commandProvider-ref="commandProvider" />
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="by.htp.task01"/>
 
 </beans>
