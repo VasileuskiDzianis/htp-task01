@@ -8,5 +8,5 @@ import by.htp.task01.domain.Book;
 public interface BookDAO {
 	void addNewBook(Book book) throws DAOException;
 	void addEditBook(Book book) throws DAOException;
-	List<Book> getBooklist() throws DAOException;
+	List<Book> getBooklist();
 }

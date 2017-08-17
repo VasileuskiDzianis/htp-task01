@@ -1,7 +1,5 @@
 package by.htp.task01.service.impl;
 
-import java.util.ArrayList;
-
 import java.util.List;
 
 import by.htp.task01.dao.BookDAO;
@@ -48,19 +46,9 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> getBookList() throws ServiceException {
-		List<Book> booklist = null;
-
-		try {
-			booklist = bookDAO.getBooklist();
-		} catch (DAOException e) {
-			throw new ServiceException(e);
-		}
-
-		if (booklist == null) {
-			booklist = new ArrayList<Book>();
-		}
-		return booklist;
+	public List<Book> getBookList() {
+		
+		return bookDAO.getBooklist();
 	}
 
 	public boolean validateBook(Book book) {

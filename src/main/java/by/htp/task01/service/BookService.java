@@ -9,5 +9,5 @@ public interface BookService {
 	
 	void addNewBook(Book book) throws ServiceException;
 	void addEditBook(Book book) throws ServiceException;
-	List<Book> getBookList() throws ServiceException;
+	List<Book> getBookList();
 }

@@ -75,7 +75,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public List<Book> getBooklist() throws DAOException {
+	public List<Book> getBooklist() {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -85,12 +85,10 @@ public class BookDAOImpl implements BookDAO {
 			connection = connectionPool.take();
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(SELECT_BOOK);
-
 			booklist = new ArrayList<Book>();
-			Book book = null;
 
 			while (resultSet.next()) {
-				book = new Book();
+				Book book = new Book();
 				book.setId(resultSet.getInt(BOOK_ID));
 				book.setTitle(resultSet.getString(BOOK_TITLE));
 				book.setAuthor(resultSet.getString(BOOK_AUTHOR));
@@ -100,13 +98,17 @@ public class BookDAOImpl implements BookDAO {
 				book.setStatus(resultSet.getBoolean(BOOK_STATUS));
 				booklist.add(book);
 			}
+			
+			return booklist;
 		} catch (ConnectionPoolException e) {
-			throw new DAOException("There was a problem connecting to the database", e);
+			
+			return Collections.emptyList();
 		} catch (SQLException e) {
-			throw new DAOException("Error executing the query 'select_book'", e);
+			
+			return Collections.emptyList();
 		} finally {
 			connectionPool.closeConnection(connection, statement, resultSet);
 		}
-		return booklist;
+
 	}
 }
